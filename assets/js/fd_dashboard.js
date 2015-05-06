@@ -9,7 +9,7 @@ Keen.ready(function(){
 // ----------------------------------------
 var pageviews_timeline = new Keen.Query("count_unique", {
   eventCollection: "pageviews",
-  targetProperty: "permanent_tracker",
+  targetProperty: "session_id",
   interval: "daily",
   groupBy: "user_agent.browser.name",
   timeframe: "previous_2_weeks"
@@ -35,13 +35,11 @@ client.draw(pageviews_timeline, document.getElementById("grid-1-1"), {
 // ----------------------------------------
 // Sample two
 // ----------------------------------------
-var pageviews_static = new Keen.Query("count", {
+var pageviews_static = new Keen.Query("count_unique", {
   eventCollection: "pageviews",
-  groupBy: "user.device_info.browser.family",
-  timeframe: {
-    start: "2014-05-01T00:00:00.000Z",
-    end: "2014-05-05T00:00:00.000Z"
-  }
+  targetProperty: "session_id",
+  groupBy: "user_agent.browser.name",
+  timeframe: "previous_2_weeks"
 });
 client.draw(pageviews_static, document.getElementById("chart-02"), {
   chartType: "piechart",

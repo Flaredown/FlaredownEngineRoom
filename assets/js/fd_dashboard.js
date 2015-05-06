@@ -5,16 +5,16 @@ var client = new Keen({
 
 Keen.ready(function(){
 // ----------------------------------------
-// Sample one
+// Unique daily visits by browser (previous two weeks)
 // ----------------------------------------
-var pageviews_timeline = new Keen.Query("count_unique", {
+var visitsByBrowserTimeline = new Keen.Query("count_unique", {
   eventCollection: "pageviews",
   targetProperty: "session_id",
   interval: "daily",
   groupBy: "user_agent.browser.name",
   timeframe: "previous_2_weeks"
 });
-client.draw(pageviews_timeline, document.getElementById("grid-1-1"), {
+client.draw(visitsByBrowserTimeline, document.getElementById("grid-1-1"), {
   chartType: "areachart",
   title: false,
   height: 250,
@@ -29,19 +29,17 @@ client.draw(pageviews_timeline, document.getElementById("grid-1-1"), {
     isStacked: true
   }
 });
+
 // ----------------------------------------
-//  End sample one
+// Browser share (previous two weeks)
 // ----------------------------------------
-// ----------------------------------------
-// Sample two
-// ----------------------------------------
-var pageviews_static = new Keen.Query("count_unique", {
+var browserShare = new Keen.Query("count_unique", {
   eventCollection: "pageviews",
   targetProperty: "session_id",
   groupBy: "user_agent.browser.name",
   timeframe: "previous_2_weeks"
 });
-client.draw(pageviews_static, document.getElementById("chart-02"), {
+client.draw(browserShare, document.getElementById("chart-02"), {
   chartType: "piechart",
   title: false,
   height: 250,
@@ -56,9 +54,32 @@ client.draw(pageviews_static, document.getElementById("chart-02"), {
     pieHole: .4
   }
 });
+
 // ----------------------------------------
-// End sample two
+// OS share (previous two weeks)
 // ----------------------------------------
+var osShare = new Keen.Query("count_unique", {
+  eventCollection: "pageviews",
+  targetProperty: "session_id",
+  groupBy: "user_agent.os.name",
+  timeframe: "previous_2_weeks"
+});
+client.draw(osShare, document.getElementById("chart-03"), {
+  chartType: "piechart",
+  title: false,
+  height: 250,
+  width: "auto",
+  chartOptions: {
+    chartArea: {
+      height: "85%",
+      left: "5%",
+      top: "5%",
+      width: "100%"
+    },
+    pieHole: .4
+  }
+});
+
 // ----------------------------------------
 // Sample three
 // ----------------------------------------
@@ -71,7 +92,7 @@ var impressions_timeline = new Keen.Query("count", {
     end: "2014-05-05T00:00:00.000Z"
   }
 });
-client.draw(impressions_timeline, document.getElementById("chart-03"), {
+client.draw(impressions_timeline, document.getElementById("whatever"), {
   chartType: "columnchart",
   title: false,
   height: 250,

@@ -12,7 +12,7 @@ var visitsByBrowserTimeline = new Keen.Query("count_unique", {
   targetProperty: "session_id",
   interval: "daily",
   groupBy: "user_agent.browser.name",
-  timeframe: "previous_2_weeks"
+  timeframe: "this_2_weeks"
 });
 client.draw(visitsByBrowserTimeline, document.getElementById("grid-1-1"), {
   chartType: "areachart",
@@ -37,7 +37,7 @@ var browserShare = new Keen.Query("count_unique", {
   eventCollection: "pageviews",
   targetProperty: "session_id",
   groupBy: "user_agent.browser.name",
-  timeframe: "previous_2_weeks"
+  timeframe: "this_2_weeks"
 });
 client.draw(browserShare, document.getElementById("chart-02"), {
   chartType: "piechart",
@@ -62,7 +62,7 @@ var osShare = new Keen.Query("count_unique", {
   eventCollection: "pageviews",
   targetProperty: "session_id",
   groupBy: "user_agent.os.name",
-  timeframe: "previous_2_weeks"
+  timeframe: "this_2_weeks"
 });
 client.draw(osShare, document.getElementById("chart-03"), {
   chartType: "piechart",
@@ -81,18 +81,14 @@ client.draw(osShare, document.getElementById("chart-03"), {
 });
 
 // ----------------------------------------
-// Sample three
+// Tracking by hour of day (previous two weeks)
 // ----------------------------------------
-var impressions_timeline = new Keen.Query("count", {
-  eventCollection: "impressions",
-  groupBy: "ad.advertiser",
-  interval: "hourly",
-  timeframe: {
-    start: "2014-05-04T00:00:00.000Z",
-    end: "2014-05-05T00:00:00.000Z"
-  }
+var trackingHourOfDay = new Keen.Query("count", {
+  eventCollection: "entries",
+  groupBy: "local_time_hour",
+  timeframe: "this_2_weeks"
 });
-client.draw(impressions_timeline, document.getElementById("whatever"), {
+client.draw(trackingHourOfDay, document.getElementById("chart-04"), {
   chartType: "columnchart",
   title: false,
   height: 250,
@@ -110,9 +106,34 @@ client.draw(impressions_timeline, document.getElementById("whatever"), {
     isStacked: true
   }
 });
+
 // ----------------------------------------
-// End sample three
+// Tracking by day of week (previous four weeks)
 // ----------------------------------------
+var trackingDayOfWeek = new Keen.Query("count", {
+  eventCollection: "entries",
+  groupBy: "day_of_week",
+  timeframe: "this_4_weeks"
+});
+client.draw(trackingDayOfWeek, document.getElementById("chart-05"), {
+  chartType: "columnchart",
+  title: false,
+  height: 250,
+  width: "auto",
+  chartOptions: {
+    chartArea: {
+      height: "75%",
+      left: "10%",
+      top: "5%",
+      width: "60%"
+    },
+    bar: {
+      groupWidth: "85%"
+    },
+    isStacked: true
+  }
+});
+
 // ----------------------------------------
 // Sample four
 // ----------------------------------------
@@ -125,7 +146,7 @@ var impressions_timeline_by_device = new Keen.Query("count", {
     end: "2014-05-05T00:00:00.000Z"
   }
 });
-client.draw(impressions_timeline_by_device, document.getElementById("chart-04"), {
+client.draw(impressions_timeline_by_device, document.getElementById("whatever"), {
   chartType: "columnchart",
   title: false,
   height: 250,
@@ -158,7 +179,7 @@ var impressions_timeline_by_country = new Keen.Query("count", {
     end: "2014-05-05T00:00:00.000Z"
   }
 });
-client.draw(impressions_timeline_by_country, document.getElementById("chart-05"), {
+client.draw(impressions_timeline_by_country, document.getElementById("whatever"), {
   chartType: "columnchart",
   title: false,
   height: 250,

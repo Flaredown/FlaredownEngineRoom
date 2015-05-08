@@ -3,6 +3,42 @@ var client = new Keen({
   readKey: "6c4dfeb182ebda9bb824420a5c6982c8f70309436bf92772e92f8134f016b0dbbcf554e221415c31e9a182f568b3339ebdad420271e3c36e0ebaa06b6756328bf01c0b1f27fcee5887b3e4bd295f0529035d4429dccd7da6632e3c4922bf045b249c77473236e83dc6ee3daac7e2e625"
 });
 
+var areaChartOptions = {
+  chartArea: {
+    height: "85%",
+    left: "5%",
+    top: "5%",
+    width: "80%"
+  },
+  isStacked: true
+};
+
+var ringChartOptions = {
+  chartArea: {
+    height: "85%",
+    left: "5%",
+    top: "5%",
+    width: "100%"
+  },
+  pieHole: .4  
+};
+
+var columnChartOptions = {
+  chartArea: {
+    height: "75%",
+    left: "10%",
+    top: "5%",
+    width: "100%"
+  },
+  bar: {
+    groupWidth: "85%"
+  },
+  isStacked: true,
+  legend: {
+    position: "none"
+  }
+};
+
 Keen.ready(function(){
 // ----------------------------------------
 // Unique daily visits by browser (previous two weeks)
@@ -19,15 +55,7 @@ client.draw(visitsByBrowserTimeline, document.getElementById("browser-timeline")
   title: false,
   height: 250,
   width: "auto",
-  chartOptions: {
-    chartArea: {
-      height: "85%",
-      left: "5%",
-      top: "5%",
-      width: "80%"
-    },
-    isStacked: true
-  }
+  chartOptions: areaChartOptions
 });
 
 // ----------------------------------------
@@ -44,15 +72,7 @@ client.draw(browserShare, document.getElementById("browser-share"), {
   title: false,
   height: 250,
   width: "auto",
-  chartOptions: {
-    chartArea: {
-      height: "85%",
-      left: "5%",
-      top: "5%",
-      width: "100%"
-    },
-    pieHole: .4
-  }
+  chartOptions: ringChartOptions
 });
 
 // ----------------------------------------
@@ -69,15 +89,7 @@ client.draw(osShare, document.getElementById("os-share"), {
   title: false,
   height: 250,
   width: "auto",
-  chartOptions: {
-    chartArea: {
-      height: "85%",
-      left: "5%",
-      top: "5%",
-      width: "100%"
-    },
-    pieHole: .4
-  }
+  chartOptions: ringChartOptions
 });
 
 // ----------------------------------------
@@ -119,21 +131,7 @@ client.draw(trackingHourOfDay, document.getElementById("hour-of-day"), {
   title: false,
   height: 250,
   width: "auto",
-  chartOptions: {
-    chartArea: {
-      height: "75%",
-      left: "10%",
-      top: "5%",
-      width: "100%"
-    },
-    bar: {
-      groupWidth: "85%"
-    },
-    isStacked: true,
-    legend: {
-      position: "none"
-    }
-  }
+  chartOptions: columnChartOptions
 });
 
 // ----------------------------------------
@@ -149,21 +147,7 @@ client.draw(trackingDayOfWeek, document.getElementById("day-of-week"), {
   title: false,
   height: 250,
   width: "auto",
-  chartOptions: {
-    chartArea: {
-      height: "75%",
-      left: "10%",
-      top: "5%",
-      width: "100%"
-    },
-    bar: {
-      groupWidth: "85%"
-    },
-    isStacked: true,
-    legend: {
-      position: "none"
-    }
-  }
+  chartOptions: columnChartOptions
 });
 
 // ----------------------------------------

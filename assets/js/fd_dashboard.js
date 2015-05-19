@@ -39,6 +39,21 @@ var columnChartOptions = {
   }
 };
 
+var barChartOptions = {
+  chartArea: {
+    height: "85%",
+    left: "25%",
+    top: "5%",
+    width: "65%"
+  },
+  bar: {
+    groupWidth: "85%"
+  },
+  legend: {
+    position: "none"
+  }
+};
+
 Keen.ready(function(){
   // ----------------------------------------
   // Unique daily visits by browser (previous two weeks)
@@ -90,6 +105,57 @@ Keen.ready(function(){
     height: 250,
     width: "auto",
     chartOptions: ringChartOptions
+  });
+
+  // ----------------------------------------
+  // Top conditions tracked (previous two weeks)
+  // ----------------------------------------
+  var topConditions = new Keen.Query("count_unique", {
+    eventCollection: "conditions",
+    targetProperty: "user_id",
+    groupBy: "name",
+    timeframe: "this_2_weeks"
+  });
+  client.draw(topConditions, document.getElementById("top-conditions"), {
+    chartType: "barchart",
+    title: false,
+    height: 250,
+    width: "auto",
+    chartOptions: barChartOptions
+  });
+
+  // ----------------------------------------
+  // Top symptoms tracked (previous two weeks)
+  // ----------------------------------------
+  var topSymptoms = new Keen.Query("count_unique", {
+    eventCollection: "symptoms",
+    targetProperty: "user_id",
+    groupBy: "name",
+    timeframe: "this_2_weeks"
+  });
+  client.draw(topSymptoms, document.getElementById("top-symptoms"), {
+    chartType: "barchart",
+    title: false,
+    height: 250,
+    width: "auto",
+    chartOptions: barChartOptions
+  });
+
+  // ----------------------------------------
+  // Top treatments tracked (previous two weeks)
+  // ----------------------------------------
+  var topTreatments = new Keen.Query("count_unique", {
+    eventCollection: "treatments",
+    targetProperty: "user_id",
+    groupBy: "name",
+    timeframe: "this_2_weeks"
+  });
+  client.draw(topTreatments, document.getElementById("top-treatments"), {
+    chartType: "barchart",
+    title: false,
+    height: 250,
+    width: "auto",
+    chartOptions: barChartOptions
   });
 
   // ----------------------------------------
